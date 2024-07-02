@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://di2utm4qhmacs"]
+
+[ext_resource type="Script" path="res://scripts/commander.gd" id="1_25y5k"]
+
+[node name="commander" type="Node2D"]
+script = ExtResource("1_25y5k")

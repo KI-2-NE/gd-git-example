@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8uu3gcr4xvqm"]
+
+[ext_resource type="Texture2D" uid="uid://b7nx1c7wfowsh" path="res://assets/marsinfantry/mi_base.png" id="1_clxuq"]
+[ext_resource type="Script" path="res://scripts/trooper.gd" id="1_ks077"]
+[ext_resource type="Texture2D" uid="uid://u2mkbgw1bweu" path="res://assets/marsinfantry/mi_color.png" id="2_xtssf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8jief"]
+size = Vector2(64, 64)
+
+[node name="trooper" type="Node2D"]
+script = ExtResource("1_ks077")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_8jief")
+
+[node name="sprite" type="Node2D" parent="."]
+
+[node name="color" type="Sprite2D" parent="sprite"]
+texture = ExtResource("2_xtssf")
+
+[node name="base" type="Sprite2D" parent="sprite"]
+texture = ExtResource("1_clxuq")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
