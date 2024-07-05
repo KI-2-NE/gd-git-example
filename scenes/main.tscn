@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b8uu3gcr4xvqm" path="res://scenes/trooper.tscn" id="1_5umog"]
 [ext_resource type="PackedScene" uid="uid://di2utm4qhmacs" path="res://scenes/commander.tscn" id="1_yjacb"]
 [ext_resource type="Texture2D" uid="uid://drlsncr2dr4sl" path="res://assets/tiles/grass.png" id="3_fiqu3"]
+[ext_resource type="Script" path="res://scripts/turner.gd" id="3_ngtlt"]
 [ext_resource type="Texture2D" uid="uid://bpbax4blshri7" path="res://assets/tiles/outline.png" id="4_v3jsy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0s8ei"]
@@ -20,27 +21,27 @@ tile_size = Vector2i(64, 64)
 sources/1 = SubResource("TileSetAtlasSource_0s8ei")
 sources/2 = SubResource("TileSetAtlasSource_1t7uq")
 
-[sub_resource type="GDScript" id="GDScript_5rp36"]
-script/source = "extends TileMap
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
-
 [node name="main" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="commander" parent="." instance=ExtResource("1_yjacb")]
+[node name="CanvasGroup" type="CanvasGroup" parent="Camera2D"]
 
-[node name="trooper" parent="commander" instance=ExtResource("1_5umog")]
+[node name="Button" type="Button" parent="Camera2D/CanvasGroup"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -560.0
+offset_top = -302.0
+offset_right = -463.0
+offset_bottom = -271.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "NEXT TURN"
 
 [node name="map" type="TileMap" parent="."]
 unique_name_in_owner = true
@@ -53,4 +54,20 @@ layer_1/name = "selection"
 layer_1/tile_data = PackedInt32Array()
 layer_2/name = "highlight"
 layer_2/tile_data = PackedInt32Array()
-script = SubResource("GDScript_5rp36")
+
+[node name="turner" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_ngtlt")
+
+[node name="commander" parent="turner" instance=ExtResource("1_yjacb")]
+team_color = Color(0, 0, 2, 1)
+
+[node name="trooper" parent="turner/commander" instance=ExtResource("1_5umog")]
+
+[node name="trooper2" parent="turner/commander" instance=ExtResource("1_5umog")]
+
+[node name="commander2" parent="turner" instance=ExtResource("1_yjacb")]
+
+[node name="trooper" parent="turner/commander2" instance=ExtResource("1_5umog")]
+
+[connection signal="pressed" from="Camera2D/CanvasGroup/Button" to="turner" method="_on_button_pressed"]
